@@ -11,6 +11,10 @@ export class TurmasService {
     return this.repository.create(createTurmaDto);
   }
 
+  createMany(createTurmaDto: CreateTurmaDto[]) {
+    return this.repository.createMany(createTurmaDto);
+  }
+
   findAll() {
     return this.repository.findAll();
   }

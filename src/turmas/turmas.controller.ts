@@ -22,6 +22,11 @@ export class TurmasController {
     return this.turmasService.create(createTurmaDto);
   }
 
+  @Post('/carga')
+  createMany(@Body() createTurmaDto: CreateTurmaDto[]) {
+    return this.turmasService.createMany(createTurmaDto);
+  }
+
   @Get()
   findAll() {
     return this.turmasService.findAll();

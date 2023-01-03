@@ -5,6 +5,7 @@ import { CreateTurmaDto } from './../dto/create-turma.dto';
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TurmaRepository {
@@ -13,6 +14,14 @@ export class TurmaRepository {
   async create(createTurmaDto: CreateTurmaDto): Promise<TurmaEntity> {
     return this.prisma.turma_Professor.create({
       data: createTurmaDto,
+    });
+  }
+
+  async createMany(
+    createTurmasDto: CreateTurmaDto[],
+  ): Promise<Prisma.BatchPayload> {
+    return this.prisma.turma_Professor.createMany({
+      data: createTurmasDto,
     });
   }
 
@@ -28,7 +37,10 @@ export class TurmaRepository {
     });
   }
 
-  async update(id: string, updateTurmaDto: UpdateTurmaDto): Promise<TurmaEntity> {
+  async update(
+    id: string,
+    updateTurmaDto: UpdateTurmaDto,
+  ): Promise<TurmaEntity> {
     return this.prisma.turma_Professor.update({
       where: {
         id,
