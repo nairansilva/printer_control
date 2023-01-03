@@ -23,8 +23,8 @@ export class TurmasService {
     return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} turma`;
+  findOne(id: string) {
+    return this.repository.findOne(id);
   }
 
   update(id: number, updateTurmaDto: UpdateTurmaDto) {

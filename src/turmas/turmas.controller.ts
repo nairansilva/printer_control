@@ -34,7 +34,7 @@ export class TurmasController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.turmasService.findOne(+id);
+    return this.turmasService.findOne(id);
   }
 
   @Patch(':id')
