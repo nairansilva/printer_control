@@ -15,6 +15,10 @@ export class TurmasService {
     return this.repository.createMany(createTurmaDto);
   }
 
+  deleteAll() {
+    return this.repository.deleteAll();
+  }
+
   findAll() {
     return this.repository.findAll();
   }

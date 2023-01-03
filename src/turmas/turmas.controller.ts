@@ -46,4 +46,9 @@ export class TurmasController {
   remove(@Param('id') id: string) {
     return this.turmasService.remove(+id);
   }
+
+  @Delete('/carga/all')
+  deleteAll() {
+    return this.turmasService.deleteAll();
+  }
 }

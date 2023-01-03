@@ -27,5 +27,5 @@ export class CreateTurmaDto {
 
   @IsNotEmpty()
   @IsString()
-  coornador: string;
+  coordenador: string;
 }

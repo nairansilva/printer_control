@@ -8,6 +8,6 @@ export class TurmaEntity implements Turma_Professor {
   disciplina: string;
   professor: string;
   num_Alunos: number;
-  coornador: string;
+  coordenador: string;
   dataCriacao: Date;
 }

@@ -3,7 +3,7 @@ import { TurmaEntity } from './../entities/turma.entity';
 import { CreateTurmaDto } from './../dto/create-turma.dto';
 /* eslint-disable prettier/prettier */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Delete } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
@@ -17,9 +17,20 @@ export class TurmaRepository {
     });
   }
 
+  async deleteAll(): Promise<Prisma.BatchPayload> {
+    return await this.prisma.turma_Professor.deleteMany({
+      where: {
+        idTurmaDisc: {
+          gt: 0,
+        },
+      },
+    });
+  }
+
   async createMany(
     createTurmasDto: CreateTurmaDto[],
   ): Promise<Prisma.BatchPayload> {
+    await this.deleteAll();
     return this.prisma.turma_Professor.createMany({
       data: createTurmasDto,
     });

@@ -18,6 +18,6 @@ model Turma_Professor {
   disciplina  String
   professor   String
   num_Alunos  Int
-  coornador   String
+  coordenador   String
   dataCriacao DateTime @default(now())
 }
