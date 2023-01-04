@@ -21,3 +21,15 @@ model Turma_Professor {
   coordenador String   @default("não informado")
   dataCriacao DateTime @default(now())
 }
+
+model Solicitacao {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  solicitante    String
+  solicitante_id String
+  aprovador      String
+  status         Int
+  finalizado     Boolean
+  coordenador_id String
+  coordenador    String   @default("não informado")
+  dataCriacao    DateTime @default(now())
+}

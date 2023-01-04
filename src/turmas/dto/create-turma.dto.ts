@@ -6,7 +6,7 @@ export class CreateTurmaDto {
   idTurmaDisc: number;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   codTurma: string;
 
   @IsNotEmpty()
