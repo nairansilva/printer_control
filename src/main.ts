@@ -24,7 +24,9 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: { defaultModelsExpandDepth: -1 },
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
