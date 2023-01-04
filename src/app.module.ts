@@ -5,11 +5,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthGuard } from './auth/auth.guard';
 import { TurmasModule } from './turmas/turmas.module';
-import { SolicitacaoModule } from './solicitacao/solicitacao.module';
 import { UsersModule } from './users/users.module';
+import { join } from 'path';
+import { SolicitacaoModule } from './solicitacao/solicitacao.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
-  imports: [TurmasModule, SolicitacaoModule, UsersModule, AuthModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/api',
+    }),
+    TurmasModule,
+    SolicitacaoModule,
+    UsersModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
