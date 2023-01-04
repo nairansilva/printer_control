@@ -515,25 +515,32 @@ window.onload = function() {
           "type": "object",
           "properties": {
             "idTurmaDisc": {
-              "type": "number"
+              "type": "number",
+              "description": "Id da disciplina da Turma"
             },
             "codTurma": {
-              "type": "string"
+              "type": "string",
+              "description": "Código da Turma"
             },
             "codDisc": {
-              "type": "string"
+              "type": "string",
+              "description": "Códico da Disciplina"
             },
             "disciplina": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome da Disciplina"
             },
             "professor": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome do Professor"
             },
             "num_Alunos": {
-              "type": "number"
+              "type": "number",
+              "description": "Número de Alunos"
             },
             "coordenador": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome do Coordenador"
             }
           },
           "required": [
@@ -550,25 +557,32 @@ window.onload = function() {
           "type": "object",
           "properties": {
             "idTurmaDisc": {
-              "type": "number"
+              "type": "number",
+              "description": "Id da disciplina da Turma"
             },
             "codTurma": {
-              "type": "string"
+              "type": "string",
+              "description": "Código da Turma"
             },
             "codDisc": {
-              "type": "string"
+              "type": "string",
+              "description": "Códico da Disciplina"
             },
             "disciplina": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome da Disciplina"
             },
             "professor": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome do Professor"
             },
             "num_Alunos": {
-              "type": "number"
+              "type": "number",
+              "description": "Número de Alunos"
             },
             "coordenador": {
-              "type": "string"
+              "type": "string",
+              "description": "Nome do Coordenador"
             }
           }
         },
