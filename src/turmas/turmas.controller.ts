@@ -39,12 +39,12 @@ export class TurmasController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTurmaDto: UpdateTurmaDto) {
-    return this.turmasService.update(+id, updateTurmaDto);
+    return this.turmasService.update(id, updateTurmaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.turmasService.remove(+id);
+    return this.turmasService.remove(id);
   }
 
   @Delete('/carga/all')

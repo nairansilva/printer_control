@@ -2,6 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 import { AuthGuard } from './auth/auth.guard';
+import * as dotenv from 'dotenv';
+import { initializeFirebase } from './firebase.config';
+
+dotenv.config();
+initializeFirebase();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

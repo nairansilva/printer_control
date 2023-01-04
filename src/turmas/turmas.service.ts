@@ -27,11 +27,11 @@ export class TurmasService {
     return this.repository.findOne(id);
   }
 
-  update(id: number, updateTurmaDto: UpdateTurmaDto) {
-    return `This action updates a #${id} turma`;
+  update(id: string, updateTurmaDto: UpdateTurmaDto) {
+    return this.repository.update(id, updateTurmaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} turma`;
+  remove(id: string) {
+    return this.repository.remove(id);
   }
 }
