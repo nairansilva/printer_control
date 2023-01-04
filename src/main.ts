@@ -5,6 +5,7 @@ import { AuthGuard } from './auth/auth.guard';
 import * as dotenv from 'dotenv';
 import { initializeFirebase } from './firebase.config';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 dotenv.config();
 initializeFirebase();
@@ -15,6 +16,14 @@ async function bootstrap() {
   app.useGlobalGuards(new AuthGuard());
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
+
+  const config = new DocumentBuilder()
+    .setTitle('Controle de Impressão')
+    .setDescription('Ferramenta para Controle de Impressões')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({

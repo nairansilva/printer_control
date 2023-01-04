@@ -20,11 +20,13 @@ export class TurmaRepository {
     if (!createTurmaDto.coordenador) {
       createTurmaDto.coordenador = 'não encontrado';
     }
+    
     const adicionaTurma = await this._collectionRef.add(createTurmaDto);
     if (adicionaTurma) {
       const returnWithId = await this.findOne(adicionaTurma.id);
       return { ...returnWithId, id: adicionaTurma.id };
     }
+
     throw new HttpException(
       `Não foi possível realizar a inclusão do registro`,
       HttpStatus.SERVICE_UNAVAILABLE,

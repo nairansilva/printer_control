@@ -1,6 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateSolicitacaoDto {
+  @ApiProperty({ description: 'Nome do Solicitante' })
   @IsString()
   solicitante: string;
 

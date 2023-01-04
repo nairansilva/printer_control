@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateTurmaDto {
+
   @IsNotEmpty()
   @IsNumber()
   idTurmaDisc: number;

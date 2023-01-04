@@ -7,31 +7,31 @@ import { TurmaRepository } from './repositories/turma.repository';
 export class TurmasService {
   constructor(private readonly repository: TurmaRepository) {}
 
-  create(createTurmaDto: CreateTurmaDto) {
+  create(createTurmaDto: CreateTurmaDto): Promise<CreateTurmaDto> {
     return this.repository.create(createTurmaDto);
   }
 
-  createMany(createTurmaDto: CreateTurmaDto[]) {
+  createMany(createTurmaDto: CreateTurmaDto[]): Promise<string> {
     return this.repository.createMany(createTurmaDto);
   }
 
-  deleteAll() {
+  deleteAll(): Promise<string> {
     return this.repository.deleteAll();
   }
 
-  findAll() {
+  findAll(): Promise<CreateTurmaDto[]> {
     return this.repository.findAll();
   }
 
-  findOne(id: string) {
+  findOne(id: string): Promise<CreateTurmaDto> {
     return this.repository.findOne(id);
   }
 
-  update(id: string, updateTurmaDto: UpdateTurmaDto) {
+  update(id: string, updateTurmaDto: UpdateTurmaDto): Promise<CreateTurmaDto> {
     return this.repository.update(id, updateTurmaDto);
   }
 
-  remove(id: string) {
+  remove(id: string): Promise<string> {
     return this.repository.remove(id);
   }
 }

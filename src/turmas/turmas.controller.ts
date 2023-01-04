@@ -12,11 +12,14 @@ import { TurmasService } from './turmas.service';
 import { CreateTurmaDto } from './dto/create-turma.dto';
 import { UpdateTurmaDto } from './dto/update-turma.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('turmas')
+@ApiTags('turmas')
 export class TurmasController {
   constructor(private readonly turmasService: TurmasService) {}
 
+  @ApiResponse({ status: 503, description: 'Serviço Indisponível' })
   @Post()
   create(@Body() createTurmaDto: CreateTurmaDto) {
     return this.turmasService.create(createTurmaDto);
