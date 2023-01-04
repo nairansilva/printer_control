@@ -3,7 +3,7 @@ import { TurmaEntity } from './../entities/turma.entity';
 import { CreateTurmaDto } from './../dto/create-turma.dto';
 /* eslint-disable prettier/prettier */
 
-import { Injectable, Delete } from '@nestjs/common';
+import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import * as firebase from 'firebase-admin';
@@ -25,7 +25,10 @@ export class TurmaRepository {
       const returnWithId = await this.findOne(adicionaTurma.id);
       return { ...returnWithId, id: adicionaTurma.id };
     }
-    return 'erro';
+    throw new HttpException(
+      `Não foi possível realizar a inclusão do registro`,
+      HttpStatus.SERVICE_UNAVAILABLE,
+    );
   }
 
   async deleteAll(): Promise<any> {
@@ -36,7 +39,7 @@ export class TurmaRepository {
       await this.remove(turma.id);
     });
 
-    return `registros excluídos com sucesso ${count}`;
+    return { respose: `registros excluídos com sucesso ${count}` };
   }
 
   async createMany(createTurmasDto: CreateTurmaDto[]): Promise<any> {
@@ -46,7 +49,7 @@ export class TurmaRepository {
       count++;
       await this.create(turma);
     });
-    return `Total de Registros ${count}`;
+    return { response: `Total de Registros ${count}` };
   }
 
   async findAll(): Promise<any | CreateTurmaDto[]> {
@@ -55,11 +58,7 @@ export class TurmaRepository {
       return { ...doc.data(), id: doc.id };
     });
 
-    if (data) {
-      return data;
-    }
-    return 'não achei nada';
-    // return await this.prisma.turma_Professor.findMany();
+    return data;
   }
 
   async findOne(idSearch: string): Promise<any> {
@@ -67,27 +66,21 @@ export class TurmaRepository {
     if (getTurmaPorId.data()) {
       return getTurmaPorId.data();
     }
-    return 'Id não encontrado';
+    throw new HttpException(
+      `Id ${idSearch} não foi encontrado`,
+      HttpStatus.NOT_FOUND,
+    );
   }
 
-  async update(
-    id: string,
-    updateTurmaDto: { [x: string]: any; },
-  ): Promise<any> {
+  async update(id: string, updateTurmaDto: { [x: string]: any }): Promise<any> {
     const getTurmaPorId = await this._collectionRef.doc(id);
 
-    await getTurmaPorId.update(updateTurmaDto)
-    return await this.findOne(id)
+    await getTurmaPorId.update(updateTurmaDto);
+    return await this.findOne(id);
   }
 
   async remove(id: string): Promise<any> {
     const deleteTurma = this._collectionRef.doc(id).delete();
-    return 'Registro Excluído';
+    return { response: 'Registro Excluído' };
   }
-  //   return this.prisma.turma_Professor.delete({
-  //     where: {
-  //       id,
-  //     },
-  //   });
-  // }
 }
