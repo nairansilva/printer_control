@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as firebase from 'firebase-admin';
 
 export function initializeFirebase() {
@@ -5,5 +6,6 @@ export function initializeFirebase() {
   firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
     databaseURL: '',
+    storageBucket: 'printercontrolnestjs.appspot.com',
   });
 }

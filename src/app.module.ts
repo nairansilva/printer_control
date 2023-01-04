@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { SolicitacaoModule } from './solicitacao/solicitacao.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ArquivosModule } from './arquivos/arquivos.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     SolicitacaoModule,
     UsersModule,
     AuthModule,
+    ArquivosModule,
   ],
   controllers: [AppController],
   providers: [
