@@ -21,28 +21,7 @@ export class UsersRepository {
     .collection('users');
 
   async create(createUserDto: CreateUserDto): Promise<any | CreateUserDto> {
-    createUserDto.senha = await bcrypt.hash(createUserDto.senha, 10);
-    const userExist = await this.findOne(createUserDto.email);
-
-    if (userExist) {
-      throw new HttpException(
-        `O e-mail ${createUserDto.email} já existe na base de dados`,
-        HttpStatus.CONFLICT
-      )
-    }
-    
-    const adicionaUser = await this._collectionRef
-      .doc(createUserDto.email)
-      .set(createUserDto);
-    if (adicionaUser) {
-      const returnWithId = await this.findOne(createUserDto.email);
-      return { ...returnWithId };
-    }
-
-    throw new HttpException(
-      `Não foi possível realizar a inclusão do registro`,
-      HttpStatus.SERVICE_UNAVAILABLE,
-    );
+    return this._collectionRef.doc(createUserDto.email).set(createUserDto);
   }
 
   async findOne(idSearch: string): Promise<any> {
@@ -52,22 +31,7 @@ export class UsersRepository {
     }
   }
 
-  public async signin(
-    createUserDto: CreateUserDto,
-  ): Promise<{ name: string; jwtToken: string; email: string }> {
-    const user = await this.findByEmail(createUserDto.email);
-    const match = await this.checkPassword(createUserDto.senha, user);
-
-    if (!match) {
-      throw new NotFoundException('invalid credentials');
-    }
-    
-    const jwtToken = await this.authService.createAcessToken(user.email);
-
-    return { name: user.email, jwtToken: jwtToken, email: user.email };
-  }
-
-  private async findByEmail(email: string): Promise<any> {
+  async findByEmail(email: string): Promise<any> {
     const findUser = await this._collectionRef
       .where('email', '==', email)
       .get();
@@ -75,23 +39,6 @@ export class UsersRepository {
 
     findUser.forEach((doc) => (user = doc.data()));
 
-    if (!user) {
-      throw new NotFoundException('Email not found');
-    }
-
     return user;
-  }
-
-  private async checkPassword(
-    password: string,
-    user: CreateUserDto,
-  ): Promise<boolean> {
-    const match = await bcrypt.compare(password, user.senha);
-
-    if (!match) {
-      throw new NotFoundException('Password not found');
-    }
-
-    return match;
   }
 }

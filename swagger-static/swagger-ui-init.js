@@ -439,25 +439,6 @@ window.onload = function() {
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          },
-          "tags": [
-            "Usuarios"
-          ]
-        },
-        "get": {
-          "operationId": "UsersController_findAll",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "",
-              "content": {
-                "application/json": {
-                  "schema": {
                     "type": "string"
                   }
                 }

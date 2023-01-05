@@ -29,11 +29,11 @@ export class UsersController {
     return this.usersService.signin(createUserDto);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get()
+  // findAll() {
+  //   return this.usersService.findAll();
+  // }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

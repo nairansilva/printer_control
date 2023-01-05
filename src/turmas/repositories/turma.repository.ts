@@ -20,7 +20,7 @@ export class TurmaRepository {
     if (!createTurmaDto.coordenador) {
       createTurmaDto.coordenador = 'não encontrado';
     }
-    
+
     const adicionaTurma = await this._collectionRef.add(createTurmaDto);
     if (adicionaTurma) {
       const returnWithId = await this.findOne(adicionaTurma.id);
@@ -64,14 +64,7 @@ export class TurmaRepository {
   }
 
   async findOne(idSearch: string): Promise<any> {
-    const getTurmaPorId = await this._collectionRef.doc(idSearch).get();
-    if (getTurmaPorId.data()) {
-      return getTurmaPorId.data();
-    }
-    throw new HttpException(
-      `Id ${idSearch} não foi encontrado`,
-      HttpStatus.NOT_FOUND,
-    );
+    return await this._collectionRef.doc(idSearch).get();
   }
 
   async update(id: string, updateTurmaDto: { [x: string]: any }): Promise<any> {
@@ -82,7 +75,7 @@ export class TurmaRepository {
   }
 
   async remove(id: string): Promise<any> {
-    const deleteTurma = this._collectionRef.doc(id).delete();
+    await this._collectionRef.doc(id).delete();
     return { response: 'Registro Excluído' };
   }
 }

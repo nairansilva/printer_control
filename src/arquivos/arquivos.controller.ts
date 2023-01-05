@@ -23,7 +23,7 @@ import { CreateArquivoDto } from './dto/create-arquivo.dto';
 export class ArquivosController {
   constructor(private readonly arquivosService: ArquivosService) {}
 
-  @Post() 
+  @Post()
   create(@Body() createArquivoDto: CreateArquivoDto) {
     return this.arquivosService.create(createArquivoDto);
   }

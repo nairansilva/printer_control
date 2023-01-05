@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTurmaDto } from './dto/create-turma.dto';
 import { UpdateTurmaDto } from './dto/update-turma.dto';
 import { TurmaRepository } from './repositories/turma.repository';
@@ -23,8 +23,16 @@ export class TurmasService {
     return this.repository.findAll();
   }
 
-  findOne(id: string): Promise<CreateTurmaDto> {
-    return this.repository.findOne(id);
+  async findOne(id: string): Promise<CreateTurmaDto> {
+    const getTurmaPorId = await this.repository.findOne(id);
+    if (getTurmaPorId.data()) {
+      return getTurmaPorId.data();
+    }
+    throw new HttpException(
+      `Id ${id} não foi encontrado`,
+      HttpStatus.NOT_FOUND,
+    );
+
   }
 
   update(id: string, updateTurmaDto: UpdateTurmaDto): Promise<CreateTurmaDto> {
