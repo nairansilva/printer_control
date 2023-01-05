@@ -473,109 +473,6 @@ window.onload = function() {
             "Usuarios"
           ]
         }
-      },
-      "/arquivos": {
-        "post": {
-          "operationId": "ArquivosController_create",
-          "parameters": [],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateArquivoDto"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "tags": [
-            "Arquivos"
-          ]
-        }
-      },
-      "/arquivos/{id}": {
-        "get": {
-          "operationId": "ArquivosController_findOne",
-          "parameters": [
-            {
-              "name": "id",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          },
-          "tags": [
-            "Arquivos"
-          ]
-        },
-        "delete": {
-          "operationId": "ArquivosController_remove",
-          "parameters": [
-            {
-              "name": "id",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "tags": [
-            "Arquivos"
-          ]
-        }
-      },
-      "/arquivos/upload": {
-        "post": {
-          "operationId": "ArquivosController_uploadFile",
-          "parameters": [],
-          "responses": {
-            "201": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "Arquivos"
-          ]
-        }
       }
     },
     "info": {
@@ -746,23 +643,6 @@ window.onload = function() {
           "required": [
             "email",
             "senha"
-          ]
-        },
-        "CreateArquivoDto": {
-          "type": "object",
-          "properties": {
-            "nomeArquivo": {
-              "type": "string",
-              "description": "Nome do Arquivo"
-            },
-            "urlDownload": {
-              "type": "string",
-              "description": "Url para Download"
-            }
-          },
-          "required": [
-            "nomeArquivo",
-            "urlDownload"
           ]
         }
       }

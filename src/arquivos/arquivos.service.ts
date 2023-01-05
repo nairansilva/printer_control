@@ -15,7 +15,20 @@ export class ArquivosService {
     return this.arquivosRepository.findOne(id);
   }
 
+  async getFile(
+    solicitacao: string,
+    arquivo: string,
+  ): Promise<DownloadInterface> {
+    const file = await this.arquivosRepository.getFile(solicitacao, arquivo);
+
+    return file;
+  }
+
   remove(id: number) {
     return `This action removes a #${id} arquivo`;
+  }
+
+  uploadFiles(file: Express.Multer.File, solicitacao: string) {
+    return this.arquivosRepository.uploadFiles(file, solicitacao);
   }
 }

@@ -48,19 +48,46 @@ export class ArquivosRepository {
       .getSignedUrl({ action: 'read', expires: '03-09-2999' });
 
     return { nomeArquivo: id, urlDownload: urlSign };
-
-    return; //this._collectionRef.get('print.jp');
   }
 
-  // async create(idSearch: string): Promise<any> {
-  //   this._collectionRef
-  //   const getTurmaPorId = await this._collectionRef.doc(idSearch).get();
-  //   if (getTurmaPorId.data()) {
-  //     return getTurmaPorId.data();
-  //   }
-  //   throw new HttpException(
-  //     `Id ${idSearch} não foi encontrado`,
-  //     HttpStatus.NOT_FOUND,
-  //   );
-  // }
+  async getFile(
+    solicitacao: string,
+    arquivo: string,
+  ): Promise<DownloadInterface> {
+    // const stream = await this._collectionRef
+    //   .file('/rename/package.json').createReadStream()
+    //   console.log(stream)
+
+    //   return stream
+
+    // const stream = await this._collectionRef
+    //   .file('rename/Tutorial para conectar ao VPN.docx')
+    //   .download();
+
+    // const [teste] = stream;
+
+    const path = `${solicitacao}/${arquivo}`;
+    const [arquivoExiste] = await this._collectionRef.file(path).exists();
+
+    if (!arquivoExiste) {
+      throw new HttpException('Arquivo não encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    const urlSign = await this._collectionRef
+      .file(path)
+      .getSignedUrl({ action: 'read', expires: '03-09-2999' });
+
+    return { nomeArquivo: arquivo, urlDownload: urlSign };
+  }
+
+  async uploadFiles(
+    file: Express.Multer.File,
+    solicitacao: string
+  ): Promise<void> {
+    const fileBuffer = await this._collectionRef
+      .file(`${solicitacao}/${file.originalname}`)
+      .save(file.buffer);
+
+    return fileBuffer;
+  }
 }
