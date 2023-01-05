@@ -6,6 +6,6 @@ export function initializeFirebase() {
   firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
     databaseURL: '',
-    storageBucket: 'printercontrolnestjs.appspot.com',
+    storageBucket: 'gs://printercontrolnestjs.appspot.com',
   });
 }

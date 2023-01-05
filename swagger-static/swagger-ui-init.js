@@ -41,7 +41,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -68,7 +68,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -107,7 +107,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -142,7 +142,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -185,7 +185,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -218,7 +218,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -244,7 +244,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "turmas"
+            "Turmas"
           ],
           "security": [
             {
@@ -280,7 +280,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "solicitacao"
+            "Solicitacao"
           ]
         },
         "get": {
@@ -299,7 +299,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "solicitacao"
+            "Solicitacao"
           ],
           "security": [
             {
@@ -334,7 +334,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "solicitacao"
+            "Solicitacao"
           ],
           "security": [
             {
@@ -377,7 +377,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "solicitacao"
+            "Solicitacao"
           ],
           "security": [
             {
@@ -410,7 +410,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "solicitacao"
+            "Solicitacao"
           ],
           "security": [
             {
@@ -446,7 +446,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "usuarios"
+            "Usuarios"
           ]
         },
         "get": {
@@ -465,7 +465,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "usuarios"
+            "Usuarios"
           ]
         }
       },
@@ -489,7 +489,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "usuarios"
+            "Usuarios"
           ]
         }
       },
@@ -518,7 +518,10 @@ window.onload = function() {
                 }
               }
             }
-          }
+          },
+          "tags": [
+            "Arquivos"
+          ]
         }
       },
       "/arquivos/{id}": {
@@ -545,7 +548,10 @@ window.onload = function() {
                 }
               }
             }
-          }
+          },
+          "tags": [
+            "Arquivos"
+          ]
         },
         "delete": {
           "operationId": "ArquivosController_remove",
@@ -570,7 +576,10 @@ window.onload = function() {
                 }
               }
             }
-          }
+          },
+          "tags": [
+            "Arquivos"
+          ]
         }
       }
     },
@@ -746,7 +755,20 @@ window.onload = function() {
         },
         "CreateArquivoDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "nomeArquivo": {
+              "type": "string",
+              "description": "Nome do Arquivo"
+            },
+            "urlDownload": {
+              "type": "string",
+              "description": "Url para Download"
+            }
+          },
+          "required": [
+            "nomeArquivo",
+            "urlDownload"
+          ]
         }
       }
     }

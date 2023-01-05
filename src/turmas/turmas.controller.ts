@@ -20,7 +20,7 @@ import {
 } from '@nestjs/swagger';
 
 @Controller('turmas')
-@ApiTags('turmas')
+@ApiTags('Turmas')
 export class TurmasController {
   constructor(private readonly turmasService: TurmasService) {}
 

@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('solicitacao')
-@ApiTags('solicitacao')
+@ApiTags('Solicitacao')
 export class SolicitacaoController {
   constructor(private readonly solicitacaoService: SolicitacaoService) {}
 
