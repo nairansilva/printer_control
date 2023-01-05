@@ -562,6 +562,20 @@ window.onload = function() {
             "Arquivos"
           ]
         }
+      },
+      "/arquivos/upload": {
+        "post": {
+          "operationId": "ArquivosController_uploadFile",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "Arquivos"
+          ]
+        }
       }
     },
     "info": {

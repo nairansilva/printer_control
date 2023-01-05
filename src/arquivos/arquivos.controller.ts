@@ -8,7 +8,10 @@ import {
   Res,
   StreamableFile,
   Header,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import express, { Request, Response } from 'express';
 import { createReadStream } from 'fs';
@@ -36,5 +39,11 @@ export class ArquivosController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.arquivosService.remove(+id);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
   }
 }
