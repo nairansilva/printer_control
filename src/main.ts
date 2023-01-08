@@ -14,13 +14,7 @@ initializeFirebase();
 const serverUrl = 'http://localhost:3000';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  app.enableCors({
-    allowedHeaders: '*',
-    origin: '*',
-    credentials: true,
-  });
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   app.useGlobalGuards(new AuthGuard());
   app.use(json({ limit: '50mb' }));
