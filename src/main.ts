@@ -16,6 +16,12 @@ const serverUrl = 'http://localhost:3000';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+    credentials: true,
+  });
+
   app.useGlobalGuards(new AuthGuard());
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
@@ -42,11 +48,6 @@ async function bootstrap() {
   //   credentials: true,
   // });
 
-  app.enableCors({
-    origin: '*',
-    methods: '*',
-    allowedHeaders: '*',
-  });
 
   await app.listen(3000);
 
