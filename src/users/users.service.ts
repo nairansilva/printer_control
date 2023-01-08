@@ -16,7 +16,7 @@ export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto): Promise<string> {
     const userExist = await this.usersRepository.findOne(createUserDto.email);
@@ -65,7 +65,7 @@ export class UsersService {
 
     const jwtToken = await this.authService.createAcessToken(user.email);
 
-    return { name: user.email, jwtToken: jwtToken, email: user.email };
+    return { name: user.email, jwtToken: jwtToken };
   }
 
   private async checkPassword(
