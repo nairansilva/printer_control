@@ -36,11 +36,18 @@ async function bootstrap() {
     }),
   );
 
+  // app.enableCors({
+  //   allowedHeaders: '*',
+  //   origin: '*',
+  //   credentials: true,
+  // });
+
   app.enableCors({
-    allowedHeaders: '*',
     origin: '*',
-    credentials: true,
+    methods: 'GET, PUT, POST, DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
   });
+
   await app.listen(3000);
 
   // get the swagger json file (if app is running in development mode)
