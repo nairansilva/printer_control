@@ -1,6 +1,4 @@
-import { Turma_Professor } from '@prisma/client';
-
-export class TurmaEntity implements Turma_Professor {
+export class TurmaEntity  {
   id: string;
   idTurmaDisc: number;
   codTurma: string;

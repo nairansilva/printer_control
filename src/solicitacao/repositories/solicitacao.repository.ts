@@ -1,13 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service';
-import { Prisma } from '@prisma/client';
 import * as firebase from 'firebase-admin';
 import { CreateSolicitacaoDto } from '../dto/create-solicitacao.dto';
 
 @Injectable()
 export class SolicitacaoRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor() { }
 
   private _collectionRef: FirebaseFirestore.CollectionReference = firebase
     .firestore()

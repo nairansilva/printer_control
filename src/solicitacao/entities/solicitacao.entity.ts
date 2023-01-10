@@ -1,6 +1,4 @@
-import { Solicitacao } from '@prisma/client';
-
-export class SolicitacaoEntity implements Solicitacao {
+export class SolicitacaoEntity {
   id: string;
   solicitante: string;
   solicitante_id: string;
