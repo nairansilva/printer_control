@@ -84,6 +84,8 @@ export class ArquivosRepository {
     file: Express.Multer.File,
     solicitacao: string
   ): Promise<void> {
+
+    console.log(file)
     const fileBuffer = await this._collectionRef
       .file(`${solicitacao}/${file.originalname}`)
       .save(file.buffer);
