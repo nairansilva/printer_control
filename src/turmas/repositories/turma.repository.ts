@@ -5,6 +5,9 @@ import { CreateTurmaDto } from './../dto/create-turma.dto';
 
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import * as firebase from 'firebase-admin';
+import { writeFile,readFile } from 'fs/promises';
+
+import { join } from 'path';
 
 @Injectable()
 export class TurmaRepository {
@@ -49,16 +52,22 @@ export class TurmaRepository {
       count++;
       await this.create(turma);
     });
+
+    await writeFile(join(process.cwd(), 'db', 'turmas.json'), JSON.stringify(createTurmasDto));
+
     return { response: `Total de Registros ${count}` };
   }
 
   async findAll(): Promise<any | CreateTurmaDto[]> {
     const getTurmas = await this._collectionRef.get();
-    const data = getTurmas.docs.map((doc) => {
-      return { ...doc.data(), id: doc.id };
-    });
+    // const data = getTurmas.docs.map((doc) => {
+    //   return { ...doc.data(), id: doc.id };
+    // });
 
-    return data;
+    // const data;
+    const arquivo = await (await readFile(join(process.cwd(), 'db/turmas.json'))).toString()  
+
+    return JSON.parse(arquivo);
   }
 
   async findOne(idSearch: string): Promise<any> {
