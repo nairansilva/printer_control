@@ -8,14 +8,14 @@ export class CreateSolicitacaoDto implements Solicitacao {
   @IsEmail()
   email_solicitante: string;
 
-  @IsEmail()
+  @IsString()
   descricao: string;
 
   @IsNumber()
   idTurmaDisc: number;
 
   @IsEmail()
-  email_aprovador: string;
+  email_coordenador: string;
 
   @IsString()
   codTurma: string;

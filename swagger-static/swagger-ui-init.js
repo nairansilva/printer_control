@@ -597,7 +597,7 @@ window.onload = function() {
             "idTurmaDisc": {
               "type": "number"
             },
-            "email_aprovador": {
+            "email_coordenador": {
               "type": "string"
             },
             "codTurma": {
@@ -609,7 +609,7 @@ window.onload = function() {
             "email_solicitante",
             "descricao",
             "idTurmaDisc",
-            "email_aprovador",
+            "email_coordenador",
             "codTurma"
           ]
         },
@@ -628,7 +628,7 @@ window.onload = function() {
             "idTurmaDisc": {
               "type": "number"
             },
-            "email_aprovador": {
+            "email_coordenador": {
               "type": "string"
             },
             "codTurma": {

@@ -38,6 +38,6 @@ model Solicitacao {
     email_solicitante String   
     descricao String   
     idTurmaDisc Int   
-    email_aprovador String   
+    email_coordenador String   
     codTurma String   
 }
