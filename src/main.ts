@@ -22,7 +22,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.useGlobalGuards(new AuthGuard());
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
 
