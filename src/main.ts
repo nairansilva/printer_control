@@ -3,7 +3,7 @@ import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 import { AuthGuard } from './auth/auth.guard';
 import * as dotenv from 'dotenv';
-import { initializeFirebase } from './firebase.config';
+imporimport { initializeFirebase } from './firebase.config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { get } from 'http';
@@ -11,7 +11,7 @@ import { createWriteStream } from 'fs';
 
 dotenv.config();
 initializeFirebase();
-const serverUrl = 'http://localhost:3000';
+Url = 'http://localhost:3000';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +22,7 @@ async function bootstrap() {
     credentials: true,
   });
 
+  app.useGlobalGuards(new AuthGuard());
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
 
