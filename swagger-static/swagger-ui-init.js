@@ -327,7 +327,7 @@ window.onload = function() {
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "string"
+                    "type": "object"
                   }
                 }
               }
@@ -370,7 +370,7 @@ window.onload = function() {
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "string"
+                    "type": "object"
                   }
                 }
               }
@@ -403,7 +403,7 @@ window.onload = function() {
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "string"
+                    "type": "object"
                   }
                 }
               }
@@ -602,6 +602,9 @@ window.onload = function() {
             },
             "codTurma": {
               "type": "string"
+            },
+            "status": {
+              "type": "number"
             }
           },
           "required": [
@@ -610,7 +613,8 @@ window.onload = function() {
             "descricao",
             "idTurmaDisc",
             "email_coordenador",
-            "codTurma"
+            "codTurma",
+            "status"
           ]
         },
         "UpdateSolicitacaoDto": {
@@ -633,6 +637,9 @@ window.onload = function() {
             },
             "codTurma": {
               "type": "string"
+            },
+            "status": {
+              "type": "number"
             }
           }
         },

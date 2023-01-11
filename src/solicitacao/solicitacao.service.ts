@@ -22,15 +22,15 @@ export class SolicitacaoService {
     return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} solicitacao`;
+  findOne(id: string) {
+    return this.repository.findOne(id);
   }
 
-  update(id: number, updateSolicitacaoDto: UpdateSolicitacaoDto) {
-    return `This action updates a #${id} solicitacao`;
+  update(id: string, updateSolicitacaoDto: UpdateSolicitacaoDto) {
+    return this.repository.update(id, updateSolicitacaoDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} solicitacao`;
+  remove(id: string) {
+    return this.repository.remove(id);
   }
 }

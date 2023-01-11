@@ -36,7 +36,7 @@ export class SolicitacaoController {
   @ApiBearerAuth()
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.solicitacaoService.findOne(+id);
+    return this.solicitacaoService.findOne(id);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -46,13 +46,13 @@ export class SolicitacaoController {
     @Param('id') id: string,
     @Body() updateSolicitacaoDto: UpdateSolicitacaoDto,
   ) {
-    return this.solicitacaoService.update(+id, updateSolicitacaoDto);
+    return this.solicitacaoService.update(id, updateSolicitacaoDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.solicitacaoService.remove(+id);
+    return this.solicitacaoService.remove(id);
   }
 }
