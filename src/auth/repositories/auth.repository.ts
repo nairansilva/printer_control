@@ -1,19 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import * as firebase from 'firebase-admin';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class AuthRepository {
-  constructor() {}
-
-  private _collectionRef: FirebaseFirestore.CollectionReference = firebase
-    .firestore()
-    .collection('users');
+  constructor(private readonly prismaService: PrismaService) { }
 
   async findOne(idSearch: string): Promise<any> {
-    const getTurmaPorId = await this._collectionRef.doc(idSearch).get();
-    if (getTurmaPorId.data()) {
-      return getTurmaPorId.data();
+    const getTurmaPorId = await this.prismaService.user.findUnique({ where: { email: idSearch } });
+    if (getTurmaPorId) {
+      return getTurmaPorId;
     }
     throw new HttpException(
       `Id ${idSearch} não foi encontrado`,

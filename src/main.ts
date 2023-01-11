@@ -3,14 +3,13 @@ import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 import { AuthGuard } from './auth/auth.guard';
 import * as dotenv from 'dotenv';
-import { initializeFirebase } from './firebase.config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { get } from 'http';
 import { createWriteStream } from 'fs';
 
 dotenv.config();
-initializeFirebase();
+// initializeFirebase();
 const serverUrl = 'http://localhost:3000';
 
 async function bootstrap() {

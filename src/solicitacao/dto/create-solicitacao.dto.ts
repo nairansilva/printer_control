@@ -1,26 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsBoolean } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, IsEmail } from 'class-validator';
+import { Solicitacao } from '@prisma/client';
 
-export class CreateSolicitacaoDto {
-  @ApiProperty({ description: 'Nome do Solicitante' })
-  @IsString()
-  solicitante: string;
+export class CreateSolicitacaoDto implements Solicitacao {
+  id: string;
 
-  @IsString()
-  solicitante_id: string;
+  @IsEmail()
+  email_solicitante: string;
 
-  @IsString()
-  aprovador: string;
+  @IsEmail()
+  descricao: string;
 
   @IsNumber()
-  status: number;
+  idTurmaDisc: number;
 
-  @IsBoolean()
-  finalizado: boolean;
-
-  @IsString()
-  coordenador: string;
+  @IsEmail()
+  email_aprovador: string;
 
   @IsString()
-  coordenador_id: string;
+  codTurma: string;
+
 }

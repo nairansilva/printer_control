@@ -10,6 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import * as bcrypt from 'bcrypt';
+import { LoginInterface } from './models/login.interface';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,7 @@ export class UsersService {
     private readonly authService: AuthService,
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<string> {
+  async create(createUserDto: CreateUserDto): Promise<CreateUserDto> {
     const userExist = await this.usersRepository.findOne(createUserDto.email);
 
     if (userExist) {
@@ -28,16 +29,13 @@ export class UsersService {
       );
     }
 
-    createUserDto.senha = await bcrypt.hash(createUserDto.senha, 10);
+    createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
 
     const adicionaUser = await this.usersRepository.create(createUserDto);
 
     if (adicionaUser) {
-      const returnWithId = await this.usersRepository.findOne(
-        createUserDto.email,
-      );
-
-      return 'Usuário criado com Sucesso!';
+      delete adicionaUser.password;
+      return adicionaUser;
     }
 
     throw new HttpException(
@@ -50,14 +48,14 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  async signin(createUserDto: CreateUserDto) {
-    const user = await this.usersRepository.findByEmail(createUserDto.email);
+  async signin(loginInterface: LoginInterface) {
+    const user = await this.usersRepository.findByEmail(loginInterface.email);
 
     if (!user) {
       throw new NotFoundException('Usuário ou senha inválidos');
     }
 
-    const match = await this.checkPassword(createUserDto.senha, user);
+    const match = await this.checkPassword(loginInterface.password, user);
 
     if (!match) {
       throw new NotFoundException('Usuário ou senha inválidos');
@@ -72,7 +70,7 @@ export class UsersService {
     password: string,
     user: CreateUserDto,
   ): Promise<boolean> {
-    const match = await bcrypt.compare(password, user.senha);
+    const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
       throw new NotFoundException('Password not found');

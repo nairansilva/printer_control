@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateSolicitacaoDto } from './dto/create-solicitacao.dto';
 import { UpdateSolicitacaoDto } from './dto/update-solicitacao.dto';
 import { SolicitacaoRepository } from './repositories/solicitacao.repository';
@@ -7,8 +7,15 @@ import { SolicitacaoRepository } from './repositories/solicitacao.repository';
 export class SolicitacaoService {
   constructor(private readonly repository: SolicitacaoRepository) {}
 
-  create(createSolicitacaoDto: CreateSolicitacaoDto) {
-    return this.repository.create(createSolicitacaoDto);
+  async create(createSolicitacaoDto: CreateSolicitacaoDto) {
+    const solicitacao = await this.repository.create(createSolicitacaoDto)
+    if (solicitacao) {
+      return solicitacao;
+    }
+    throw new HttpException(
+      `Não foi possível realizar a inclusão do registro`,
+      HttpStatus.SERVICE_UNAVAILABLE,
+    );
   }
 
   findAll() {

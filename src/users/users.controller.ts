@@ -13,6 +13,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport/dist';
+import { LoginInterface } from './models/login.interface';
 
 @Controller('users')
 @ApiTags('Usuarios')
@@ -25,8 +26,8 @@ export class UsersController {
   }
 
   @Post('/login')
-  singin(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.signin(createUserDto);
+  singin(@Body() loginInterface: LoginInterface) {
+    return this.usersService.signin(loginInterface);
   }
 
   // @UseGuards(AuthGuard('jwt'))

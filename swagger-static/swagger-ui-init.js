@@ -439,7 +439,7 @@ window.onload = function() {
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/CreateUserDto"
                   }
                 }
               }
@@ -454,16 +454,6 @@ window.onload = function() {
         "post": {
           "operationId": "UsersController_singin",
           "parameters": [],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateUserDto"
-                }
-              }
-            }
-          },
           "responses": {
             "201": {
               "description": ""
@@ -511,6 +501,10 @@ window.onload = function() {
               "type": "string",
               "description": "Nome da Disciplina"
             },
+            "email_professor": {
+              "type": "string",
+              "description": "Email do Professor"
+            },
             "professor": {
               "type": "string",
               "description": "Nome do Professor"
@@ -519,9 +513,16 @@ window.onload = function() {
               "type": "number",
               "description": "Número de Alunos"
             },
+            "email_coordenador": {
+              "type": "string",
+              "description": "Email do Coordenador"
+            },
             "coordenador": {
               "type": "string",
               "description": "Nome do Coordenador"
+            },
+            "id": {
+              "type": "string"
             }
           },
           "required": [
@@ -529,9 +530,12 @@ window.onload = function() {
             "codTurma",
             "codDisc",
             "disciplina",
+            "email_professor",
             "professor",
             "num_Alunos",
-            "coordenador"
+            "email_coordenador",
+            "coordenador",
+            "id"
           ]
         },
         "UpdateTurmaDto": {
@@ -553,6 +557,10 @@ window.onload = function() {
               "type": "string",
               "description": "Nome da Disciplina"
             },
+            "email_professor": {
+              "type": "string",
+              "description": "Email do Professor"
+            },
             "professor": {
               "type": "string",
               "description": "Nome do Professor"
@@ -561,71 +569,69 @@ window.onload = function() {
               "type": "number",
               "description": "Número de Alunos"
             },
+            "email_coordenador": {
+              "type": "string",
+              "description": "Email do Coordenador"
+            },
             "coordenador": {
               "type": "string",
               "description": "Nome do Coordenador"
+            },
+            "id": {
+              "type": "string"
             }
           }
         },
         "CreateSolicitacaoDto": {
           "type": "object",
           "properties": {
-            "solicitante": {
-              "type": "string",
-              "description": "Nome do Solicitante"
-            },
-            "solicitante_id": {
+            "id": {
               "type": "string"
             },
-            "aprovador": {
+            "email_solicitante": {
               "type": "string"
             },
-            "status": {
+            "descricao": {
+              "type": "string"
+            },
+            "idTurmaDisc": {
               "type": "number"
             },
-            "finalizado": {
-              "type": "boolean"
-            },
-            "coordenador": {
+            "email_aprovador": {
               "type": "string"
             },
-            "coordenador_id": {
+            "codTurma": {
               "type": "string"
             }
           },
           "required": [
-            "solicitante",
-            "solicitante_id",
-            "aprovador",
-            "status",
-            "finalizado",
-            "coordenador",
-            "coordenador_id"
+            "id",
+            "email_solicitante",
+            "descricao",
+            "idTurmaDisc",
+            "email_aprovador",
+            "codTurma"
           ]
         },
         "UpdateSolicitacaoDto": {
           "type": "object",
           "properties": {
-            "solicitante": {
-              "type": "string",
-              "description": "Nome do Solicitante"
-            },
-            "solicitante_id": {
+            "id": {
               "type": "string"
             },
-            "aprovador": {
+            "email_solicitante": {
               "type": "string"
             },
-            "status": {
+            "descricao": {
+              "type": "string"
+            },
+            "idTurmaDisc": {
               "type": "number"
             },
-            "finalizado": {
-              "type": "boolean"
-            },
-            "coordenador": {
+            "email_aprovador": {
               "type": "string"
             },
-            "coordenador_id": {
+            "codTurma": {
               "type": "string"
             }
           }
@@ -633,16 +639,38 @@ window.onload = function() {
         "CreateUserDto": {
           "type": "object",
           "properties": {
-            "email": {
+            "id": {
               "type": "string"
             },
-            "senha": {
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "rule": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "email": {
               "type": "string"
             }
           },
           "required": [
-            "email",
-            "senha"
+            "id",
+            "createdAt",
+            "updatedAt",
+            "rule",
+            "name",
+            "password",
+            "email"
           ]
         }
       }

@@ -1,30 +1,17 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import * as firebase from 'firebase-admin';
 import { CreateSolicitacaoDto } from '../dto/create-solicitacao.dto';
+import { read } from 'fs';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class SolicitacaoRepository {
-  constructor() { }
-
-  private _collectionRef: FirebaseFirestore.CollectionReference = firebase
-    .firestore()
-    .collection('solicitacao');
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(
     createSolicitacaoDto: CreateSolicitacaoDto,
   ): Promise<any | CreateSolicitacaoDto> {
-    const adicionaSolicitacao = await this._collectionRef.add(
-      createSolicitacaoDto,
-    );
-    if (adicionaSolicitacao) {
-      const returnWithId = await this.findOne(adicionaSolicitacao.id);
-      return { ...returnWithId, id: adicionaSolicitacao.id };
-    }
-    throw new HttpException(
-      `Não foi possível realizar a inclusão do registro`,
-      HttpStatus.SERVICE_UNAVAILABLE,
-    );
+    return await this.prismaService.solicitacao.create({ data: createSolicitacaoDto })
   }
 
   async deleteAll(): Promise<any> {
@@ -38,50 +25,41 @@ export class SolicitacaoRepository {
     return { respose: `registros excluídos com sucesso ${count}` };
   }
 
-  async createMany(
-    createSolicitacaosDto: CreateSolicitacaoDto[],
-  ): Promise<any> {
-    let count = 0;
-    await this.deleteAll();
-    createSolicitacaosDto.map(async (turma) => {
-      count++;
-      await this.create(turma);
-    });
-    return { response: `Total de Registros ${count}` };
-  }
-
   async findAll(): Promise<any | CreateSolicitacaoDto[]> {
-    const getSolicitacaos = await this._collectionRef.get();
-    const data = getSolicitacaos.docs.map((doc) => {
-      return { ...doc.data(), id: doc.id };
-    });
-
-    return data;
+    const getSolicitacaos = await this.prismaService.solicitacao.findMany()
+    return getSolicitacaos;
   }
 
   async findOne(idSearch: string): Promise<any> {
-    const getSolicitacaoPorId = await this._collectionRef.doc(idSearch).get();
-    if (getSolicitacaoPorId.data()) {
-      return getSolicitacaoPorId.data();
-    }
-    throw new HttpException(
-      `Id ${idSearch} não foi encontrado`,
-      HttpStatus.NOT_FOUND,
-    );
+    const getSolicitacaoPorId = await this.prismaService.solicitacao.findUnique({
+      where: {
+        id: idSearch
+      }
+    });
+    return getSolicitacaoPorId;
   }
 
   async update(
     id: string,
     updateSolicitacaoDto: { [x: string]: any },
   ): Promise<any> {
-    const getSolicitacaoPorId = await this._collectionRef.doc(id);
+    const getSolicitacaoPorId = await this.prismaService.solicitacao.update({
+      where: {
+        id: id,
+      },
+      data: updateSolicitacaoDto,
+    });
 
-    await getSolicitacaoPorId.update(updateSolicitacaoDto);
-    return await this.findOne(id);
+    return getSolicitacaoPorId
   }
 
   async remove(id: string): Promise<any> {
-    const deleteSolicitacao = this._collectionRef.doc(id).delete();
-    return { response: 'Registro Excluído' };
+    const deleteUser = await this.prismaService.solicitacao.delete({
+      where: {
+        id: id,
+      },
+    })
+
+    return deleteUser
   }
 }

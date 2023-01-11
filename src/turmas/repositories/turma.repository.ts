@@ -4,28 +4,23 @@ import { CreateTurmaDto } from './../dto/create-turma.dto';
 /* eslint-disable prettier/prettier */
 
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import * as firebase from 'firebase-admin';
-import { writeFile,readFile } from 'fs/promises';
+import { writeFile, readFile } from 'fs/promises';
 
 import { join } from 'path';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class TurmaRepository {
-  constructor() {}
-
-  private _collectionRef: FirebaseFirestore.CollectionReference = firebase
-    .firestore()
-    .collection('turmas');
+  constructor(private prismaService: PrismaService) { }
 
   async create(createTurmaDto: CreateTurmaDto): Promise<any | CreateTurmaDto> {
     if (!createTurmaDto.coordenador) {
       createTurmaDto.coordenador = 'não encontrado';
     }
 
-    const adicionaTurma = await this._collectionRef.add(createTurmaDto);
+    const adicionaTurma = await this.prismaService.turma.create({ data: createTurmaDto });//await this.prismaService.turma.create({data: createTurmaDto});
     if (adicionaTurma) {
-      const returnWithId = await this.findOne(adicionaTurma.id);
-      return { ...returnWithId, id: adicionaTurma.id };
+      return { adicionaTurma };
     }
 
     throw new HttpException(
@@ -59,30 +54,25 @@ export class TurmaRepository {
   }
 
   async findAll(): Promise<any | CreateTurmaDto[]> {
-    const getTurmas = await this._collectionRef.get();
-    // const data = getTurmas.docs.map((doc) => {
-    //   return { ...doc.data(), id: doc.id };
-    // });
-
-    // const data;
-    const arquivo = await (await readFile(join(process.cwd(), 'db/turmas.json'))).toString()  
+    // const getTurmas = await this._collectionRef.get();
+    const arquivo = await (await readFile(join(process.cwd(), 'db/turmas.json'))).toString()
 
     return JSON.parse(arquivo);
   }
 
   async findOne(idSearch: string): Promise<any> {
-    return await this._collectionRef.doc(idSearch).get();
+    // return await this._collectionRef.doc(idSearch).get();
   }
 
   async update(id: string, updateTurmaDto: { [x: string]: any }): Promise<any> {
-    const getTurmaPorId = await this._collectionRef.doc(id);
+    // const getTurmaPorId = await this._collectionRef.doc(id);
 
-    await getTurmaPorId.update(updateTurmaDto);
-    return await this.findOne(id);
+    // await getTurmaPorId.update(updateTurmaDto);
+    // return await this.findOne(id);
   }
 
   async remove(id: string): Promise<any> {
-    await this._collectionRef.doc(id).delete();
-    return { response: 'Registro Excluído' };
+    // await this._collectionRef.doc(id).delete();
+    // return { response: 'Registro Excluído' };
   }
 }

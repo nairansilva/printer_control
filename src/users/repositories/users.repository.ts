@@ -10,35 +10,35 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import * as firebase from 'firebase-admin';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class UsersRepository {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly prismaService: PrismaService) { }
 
-  private _collectionRef: FirebaseFirestore.CollectionReference = firebase
-    .firestore()
-    .collection('users');
-
-  async create(createUserDto: CreateUserDto): Promise<any | CreateUserDto> {
-    return this._collectionRef.doc(createUserDto.email).set(createUserDto);
+  async create(createUserDto: CreateUserDto): Promise<CreateUserDto> {
+    return await this.prismaService.user.create({ data: createUserDto });
+    // return this._collectionRef.doc(createUserDto.email).set(createUserDto);
   }
 
   async findOne(idSearch: string): Promise<any> {
-    const getUserPorId = await this._collectionRef.doc(idSearch).get();
-    if (getUserPorId.data()) {
-      return getUserPorId.data();
+    const getUserPorId = await this.prismaService.user.findUnique({
+      where: {
+        email: idSearch,
+      },
+    })
+
+    if (getUserPorId) {
+      return getUserPorId;
     }
   }
 
   async findByEmail(email: string): Promise<any> {
-    const findUser = await this._collectionRef
-      .where('email', '==', email)
-      .get();
-    let user;
-
-    findUser.forEach((doc) => (user = doc.data()));
-
-    return user;
+    const getUserPorEmail = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    })
+    return getUserPorEmail;
   }
 }

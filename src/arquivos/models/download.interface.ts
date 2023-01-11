@@ -4,5 +4,5 @@ export type GetSignedUrlResponse = [SignerGetSignedUrlResponse];
 
 export interface DownloadInterface {
   nomeArquivo: string;
-  urlDownload: GetSignedUrlResponse;
+  urlDownload: string;
 }

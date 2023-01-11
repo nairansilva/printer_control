@@ -1,29 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import * as firebase from 'firebase-admin';
-import { getApp } from 'firebase-admin/app';
-import {
-  connectStorageEmulator,
-  deleteObject,
-  getBytes,
-  getDownloadURL,
-  getMetadata,
-  getStorage,
-  getStream,
-  list,
-  listAll,
-  ListOptions,
-  ref,
-  SettableMetadata,
-  StorageReference,
-  StringFormat,
-  updateMetadata,
-  uploadBytes,
-  uploadBytesResumable,
-  UploadMetadata,
-  UploadResult,
-  uploadString,
-} from 'firebase/storage';
 import { createWriteStream, read } from 'fs';
 import { get } from 'https';
 import { join } from 'path';
@@ -31,23 +7,9 @@ import { DownloadInterface } from '../models/download.interface';
 
 @Injectable()
 export class ArquivosRepository {
-  private _collectionRef = firebase
-    .storage()
-    .bucket('gs://printercontrolnestjs.appspot.com');
 
   async findOne(id: string): Promise<DownloadInterface> {
-    const [arquivoExiste] = await this._collectionRef.file(id).exists();
-    console.log(arquivoExiste);
-
-    if (!arquivoExiste) {
-      throw new HttpException('Arquivo não encontrado', HttpStatus.NOT_FOUND);
-    }
-
-    const urlSign = await this._collectionRef
-      .file(id)
-      .getSignedUrl({ action: 'read', expires: '03-09-2999' });
-
-    return { nomeArquivo: id, urlDownload: urlSign };
+    return { nomeArquivo: '', urlDownload: 'urlSign' };
   }
 
   async getFile(
@@ -66,18 +28,7 @@ export class ArquivosRepository {
 
     // const [teste] = stream;
 
-    const path = `${solicitacao}/${arquivo}`;
-    const [arquivoExiste] = await this._collectionRef.file(path).exists();
-
-    if (!arquivoExiste) {
-      throw new HttpException('Arquivo não encontrado', HttpStatus.NOT_FOUND);
-    }
-
-    const urlSign = await this._collectionRef
-      .file(path)
-      .getSignedUrl({ action: 'read', expires: '03-09-2999' });
-
-    return { nomeArquivo: arquivo, urlDownload: urlSign };
+    return { nomeArquivo: 'arquivo', urlDownload: 'urlSign' };
   }
 
   async uploadFiles(
@@ -85,11 +36,7 @@ export class ArquivosRepository {
     solicitacao: string
   ): Promise<void> {
 
-    console.log(file)
-    const fileBuffer = await this._collectionRef
-      .file(`${solicitacao}/${file.originalname}`)
-      .save(file.buffer);
 
-    return fileBuffer;
+    return ;
   }
 }

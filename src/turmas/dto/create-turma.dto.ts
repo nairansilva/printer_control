@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Turma } from '@prisma/client';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateTurmaDto {
-
+export class CreateTurmaDto implements Turma {
+  id: string;
   @ApiProperty({ description: 'Id da disciplina da Turma' })
   @IsNotEmpty()
   @IsNumber()
@@ -23,6 +24,11 @@ export class CreateTurmaDto {
   @IsString()
   disciplina: string;
 
+  @ApiProperty({ description: 'Email do Professor' })
+  @IsNotEmpty()
+  @IsString()
+  email_professor: string;
+
   @ApiProperty({ description: 'Nome do Professor' })
   @IsNotEmpty()
   @IsString()
@@ -32,6 +38,11 @@ export class CreateTurmaDto {
   @IsNotEmpty()
   @IsNumber()
   num_Alunos: number;
+
+  @ApiProperty({ description: 'Email do Coordenador' })
+  @IsNotEmpty()
+  @IsString()
+  email_coordenador: string;
 
   @ApiProperty({ description: 'Nome do Coordenador' })
   @IsNotEmpty()
