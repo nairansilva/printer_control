@@ -6,6 +6,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Req,
+  Body,
 } from "@nestjs/common";
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import {
@@ -45,8 +47,11 @@ export class ArquivosController {
   @UseInterceptors(FileInterceptor("file"))
   uploadFile(
     @UploadedFile() file: Express.Multer.File,
-    @Param("solicitacao") solicitacao: string
+    @Body() body,
+    @Param('solicitacao') solicitacao: string,
+    @Req() request: Request,
   ) {
-    return this.arquivosService.uploadFiles(file, solicitacao);
+    console.log(request.headers);
+     return this.arquivosService.uploadFiles(file, solicitacao);
   }
 }
