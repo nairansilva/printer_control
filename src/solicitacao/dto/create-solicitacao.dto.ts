@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsBoolean, IsEmail, isNumber } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, IsEmail } from 'class-validator';
 import { Solicitacao } from '@prisma/client';
 
 export class CreateSolicitacaoDto implements Solicitacao {
@@ -20,7 +20,7 @@ export class CreateSolicitacaoDto implements Solicitacao {
   @IsString()
   codTurma: string;
 
-  @isNumber()
+  @IsNumber()
   status: number
 
 }
