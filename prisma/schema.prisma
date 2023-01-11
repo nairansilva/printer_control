@@ -40,4 +40,5 @@ model Solicitacao {
     idTurmaDisc Int   
     email_coordenador String   
     codTurma String   
+    status Int
 }
