@@ -54,5 +54,5 @@ export class SolicitacaoController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.solicitacaoService.remove(id);
-  }
+  } 
 }
