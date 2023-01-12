@@ -1,14 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Files } from '@prisma/client';
 import { IsOptional, IsString } from 'class-validator';
 
-export class CreateArquivoDto {
-  @IsOptional()
-  @IsString()
-  @ApiProperty({ description: 'Nome do Arquivo' })
-  nomeArquivo: string;
+export class CreateArquivoDto implements Files {
+    id: string;
+    idSolicitacao: string;
+    nomeArquivo: string;
 
-  @IsOptional()
-  @IsString()
-  @ApiProperty({ description: 'Url para Download' })
-  urlDownload: string;
 }

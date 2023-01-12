@@ -42,3 +42,9 @@ model Solicitacao {
     codTurma String   
     status Int
 }
+
+model Files {
+    id  String   @id @default(auto()) @map("_id") @db.ObjectId  
+    idSolicitacao String   
+    nomeArquivo String     
+}
