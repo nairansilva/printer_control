@@ -41,10 +41,14 @@ model Solicitacao {
     email_coordenador String   
     codTurma String   
     status Int
+    files Files[]
 }
 
 model Files {
     id  String   @id @default(auto()) @map("_id") @db.ObjectId  
-    idSolicitacao String   
     nomeArquivo String     
+    solicitacao   Solicitacao   @relation(fields: [idSolicitacao], references: [id], onDelete: Cascade)
+    idSolicitacao String @db.ObjectId 
+    file Bytes?
+     
 }

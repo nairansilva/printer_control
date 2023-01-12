@@ -51,14 +51,14 @@ export class ArquivosController {
     return this.arquivosService.remove(id);
   }
 
-  // @Post('upload/:solicitacao')
-  // @UseInterceptors(FileInterceptor('file'))
-  // uploadFile(
-  //   @UploadedFile() file: Express.Multer.File,
-  //   @Param('solicitacao') solicitacao: string
-  // ) {
-  //   return this.arquivosService.uploadFiles(file, solicitacao);
-  // } 
+  @Post('upload/buffer/:solicitacao')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('solicitacao') solicitacao: string
+  ) {
+    return this.arquivosService.create(solicitacao, 'teste', file.buffer);
+  } 
 
 
   @Get('download/:fileName')
@@ -111,6 +111,11 @@ export class ArquivosController {
     @Param('solicitacao') solicitacao: string,
     @Param('arquivo') arquivo: string,
   ) {
-    return false
+    const diretorioSolicitacao = `${process.cwd()}/uploads/${solicitacao}/${arquivo}`
+    // console.log(diretorioSolicitacao)
+    // const teste = fs.createReadStream(diretorioSolicitacao)
+    console.log(file.buffer);
+    return true
   }
+
 }

@@ -15,8 +15,8 @@ export class ArquivosRepository {
 
   constructor(private readonly prismaService: PrismaService) { }
 
-  async create(diretorio: string, arquivo: string): Promise<any> {
-    return this.prismaService.files.create({ data: { idSolicitacao: diretorio, nomeArquivo: arquivo } })
+  async create(diretorio: string, arquivo: string, file: Buffer = Buffer.alloc(0)): Promise<any> {
+    return this.prismaService.files.create({ data: { idSolicitacao: diretorio, nomeArquivo: arquivo, file: file } })
   }
 
   async findOne(id: string): Promise<CreateArquivoDto> {
@@ -51,13 +51,13 @@ export class ArquivosRepository {
   }
 
 
-  async deleteFile(solicitacao:string, arquivo: string){
+  async deleteFile(solicitacao: string, arquivo: string) {
     const dir = `${process.cwd()}/uploads/${solicitacao}`
     const retorno = fs.rmSync(dir, { recursive: true, force: true });
     console.log(dir)
-    return retorno 
+    return retorno
 
-  }  
+  }
   async getFile(
     solicitacao: string,
     arquivo: string,

@@ -8,8 +8,13 @@ import { Files } from '@prisma/client';
 @Injectable()
 export class ArquivosService {
   constructor(private readonly arquivosRepository: ArquivosRepository) { }
-  create(diretorio: string, arquivo: string): Promise<any> {
-    const fileOk = this.arquivosRepository.create(diretorio, arquivo);
+  create(
+    diretorio: string,
+    arquivo: string,
+    file: Buffer = Buffer.alloc(0),
+  ): Promise<any> {
+
+    const fileOk = this.arquivosRepository.create(diretorio, arquivo, file);
     if (!fileOk) {
       throw new HttpException(
         `Não foi possível realizar o upload do arquivo ${arquivo}`,
