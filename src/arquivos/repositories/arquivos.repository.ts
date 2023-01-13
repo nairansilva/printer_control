@@ -9,11 +9,16 @@ import { Arquivo } from '../entities/arquivo.entity';
 import { Files } from '@prisma/client';
 import { CreateArquivoDto } from '../dto/create-arquivo.dto';
 import * as fs from 'fs';
+import * as firebase from 'firebase-admin';
 
 @Injectable()
 export class ArquivosRepository {
 
   constructor(private readonly prismaService: PrismaService) { }
+
+  private _collectionRef = firebase
+    .storage()
+    .bucket('gs://printercontrolnestjs.appspot.com');
 
   async create(diretorio: string, arquivo: string, file: Buffer = Buffer.alloc(0)): Promise<any> {
     return this.prismaService.files.create({ data: { idSolicitacao: diretorio, nomeArquivo: arquivo, file: file } })
@@ -58,24 +63,6 @@ export class ArquivosRepository {
     return retorno
 
   }
-  async getFile(
-    solicitacao: string,
-    arquivo: string,
-  ): Promise<DownloadInterface> {
-    // const stream = await this._collectionRef
-    //   .file('/rename/package.json').createReadStream()
-    //   console.log(stream)
-
-    //   return stream
-
-    // const stream = await this._collectionRef
-    //   .file('rename/Tutorial para conectar ao VPN.docx')
-    //   .download();
-
-    // const [teste] = stream;
-
-    return { nomeArquivo: 'arquivo', urlDownload: 'urlSign' };
-  }
 
   async uploadFiles(
     file: Express.Multer.File,
@@ -84,5 +71,52 @@ export class ArquivosRepository {
 
 
     return;
+  }
+
+  async uploadFilesFirebase(
+    file: Express.Multer.File,
+    solicitacao: string
+  ): Promise<void> {
+
+    console.log(file)
+    const fileBuffer = await this._collectionRef
+      .file(`${solicitacao}/${file.originalname}`)
+      .save(file.buffer);
+
+    return fileBuffer;
+  }
+
+  async getFileUrl(
+    solicitacao: string,
+    arquivo: string,
+  ): Promise<DownloadInterface> {
+
+    const path = `${solicitacao}/${arquivo}`;
+    console.log(path)
+
+    const [arquivoExiste] = await this._collectionRef.file(path).exists();
+
+    console.log(arquivoExiste)
+    if (!arquivoExiste) {
+      throw new HttpException('Arquivo não encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    const urlSign = await this._collectionRef
+      .file(path)
+      .getSignedUrl({ action: 'read', expires: '03-09-2999' });
+
+    return { nomeArquivo: arquivo, urlDownload: urlSign };
+  }
+
+  async deleteFileFirebase(solicitacao:string, arquivo = '') {
+    let deleteSolicitacao;
+    if(arquivo === ''){
+      deleteSolicitacao = await this._collectionRef.deleteFiles({prefix: solicitacao})
+    } else {
+      deleteSolicitacao = await this._collectionRef.file(solicitacao+'/'+arquivo).delete()
+    }
+
+
+    return deleteSolicitacao
   }
 }

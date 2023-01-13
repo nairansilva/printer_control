@@ -11,6 +11,8 @@ import {
   MaxFileSizeValidator,
   Res,
   HttpStatus,
+  Body,
+  Req,
 } from "@nestjs/common";
 import * as fs from 'fs';
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
@@ -23,6 +25,7 @@ import { extname } from "path";
 import { ArquivosService } from "./arquivos.service";
 import { HttpException } from '@nestjs/common';
 import { ValidationInterceptor } from './interceptors/validation.interceptor';
+import { Arquivo } from './entities/arquivo.entity';
 
 @Controller("arquivos")
 @ApiExcludeController()
@@ -58,9 +61,45 @@ export class ArquivosController {
     @Param('solicitacao') solicitacao: string
   ) {
     return this.arquivosService.create(solicitacao, 'teste', file.buffer);
-  } 
+  }
+
+  @Get('firebase/downloadUrl/:solicitacao/:arquivo')
+  async getFileUrl(
+    @Param('solicitacao') solicitacao: string,
+    @Param('arquivo') arquivo: string
+  ) {
+    const file = await this.arquivosService.getFileUrl(solicitacao, arquivo);
+
+    return file;
+  }
+
+  @Post('firebase/upload/:solicitacao/:arquivo')
+  @UseInterceptors(ValidationInterceptor, FileInterceptor('file'))
+  uploadFileFirebase(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body,
+    @Param('solicitacao') solicitacao: string,
+    @Param('arquivo') arquivo: string,
+    @Req() request: Request,
+  ) {
+    console.log(request.headers);
+    return this.arquivosService.uploadFileFirebase(file, solicitacao);
+  }
+
+  @Delete('firebase/:solicitacao/:arquivo')
+  removeFirebase(
+    @Param('solicitacao') solicitacao: string,
+    @Param('arquivo') arquivo: string) {
+    return this.arquivosService.removeFirebase(solicitacao, arquivo);
+  }
 
 
+  @Delete('firebase/:solicitacao')
+  removeSolicitacaoFirebase(
+    @Param('solicitacao') solicitacao: string) {
+    return this.arquivosService.removeFirebase(solicitacao);
+  }
+  
   @Get('download/:fileName')
   download(@Res() res, @Param('fileName') fileName: string) {
     return res.download(process.cwd() + '/uploads/' + fileName);
@@ -102,7 +141,7 @@ export class ArquivosController {
   uploadLocal(@UploadedFile(
     new ParseFilePipe({
       validators: [
-        new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+        new FileTypeValidator({ fileType: '.(png|jpeg|jpg|pdf|doc|docx)' }),
         new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
       ],
     }),

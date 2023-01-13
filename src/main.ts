@@ -7,9 +7,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { get } from 'http';
 import { createWriteStream } from 'fs';
+import { initializeFirebase } from './firebase.config';
 
 dotenv.config();
-// initializeFirebase();
+initializeFirebase();
 const serverUrl = 'http://localhost:3000';
 
 async function bootstrap() {
